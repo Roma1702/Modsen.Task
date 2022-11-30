@@ -7,15 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\Interfaces\" />
-    <Folder Include="Configurations\" />
-    <Folder Include="Data\" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.11" />
+    <Folder Include="DependencyInject\" />
+    <Folder Include="Mappers\" />
   </ItemGroup>
 
   <ItemGroup>

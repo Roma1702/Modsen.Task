@@ -26,9 +26,9 @@ public class EventRepository : IEventRepository
         await _applicationContext.SaveChangesAsync();
     }
 
-    public async Task<List<EventModel>> GetAllEventsAsync()
+    public async Task<List<EventModel>> GetChunkOfEventsWithSizeAsync(int number, int size)
     {
-        var events = await _dbSet.AsNoTracking().ToListAsync();
+        var events = await _dbSet.AsNoTracking().Skip(number * size).Take(size).ToListAsync();
         var eventModels = _mapper.Map<List<EventModel>>(events);
         return eventModels;
     }

@@ -6,8 +6,6 @@ public class EventModel
     public string? Name { get; set; }
     public string? Description { get; set; }
     public string? Plan { get; set; }
-    public Guid SpeakerId { get; set; }
-    public Guid OrganizerId { get; set; }
     public DateTimeOffset? MeetupDate { get; set; }
     public string? Place { get; set; }
 }

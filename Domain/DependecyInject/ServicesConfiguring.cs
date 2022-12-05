@@ -4,11 +4,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Domain.DependecyInject
 {
-    public class ConfigureServices
+    public static class ServicesConfiguring
     {
-        public static void Configure(IServiceCollection services)
+        public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddTransient<IEventService, EventService>();
+            services.AddTransient<IIdentityService, IdentityService>();
         }
     }
 }

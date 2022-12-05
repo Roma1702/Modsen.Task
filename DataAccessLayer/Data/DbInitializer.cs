@@ -24,7 +24,13 @@ public class DbInitializer : IDbInitializer
         _context.Events?.AddRange(FakeData.Events);
         _context.SaveChanges();
 
-        _context.ConnectionsUserWithEvent?.AddRange(FakeData.UserConnectionsWithEvent);
+        _context.EventRoles?.AddRange(FakeData.EventRoles);
+        _context.SaveChanges();
+
+        _context.EventMembers?.AddRange(FakeData.EventMembers);
+        _context.SaveChanges();
+
+        _context.UserRoles?.AddRange(FakeData.UserRoles);
         _context.SaveChanges();
     }
 }

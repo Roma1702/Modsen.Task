@@ -6,7 +6,7 @@ namespace IdentityServerApi.IdentityServerSettings;
 
 internal static class IdentityServerDbInitializer
 {
-    public static void InitializeDatabase(IApplicationBuilder app)
+    public static void InitializeDatabase(this IApplicationBuilder app)
     {
         using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>()!.CreateScope();
         serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();

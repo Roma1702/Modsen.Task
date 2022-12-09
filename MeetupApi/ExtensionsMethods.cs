@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using Entities.Identity;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace MeetupApi;
 
@@ -12,6 +13,7 @@ public static class ExtensionsMethods
 
         services.AddAuthentication(options =>
         {
+            options.DefaultScheme = "Bearer";
             options.DefaultAuthenticateScheme = "Bearer";
             options.DefaultChallengeScheme = "Bearer";
         }).AddJwtBearer(options =>
@@ -20,5 +22,7 @@ public static class ExtensionsMethods
             options.RequireHttpsMetadata = false;
             options.Audience = "api";
         });
+
+        services.AddAuthorization();
     }
 }

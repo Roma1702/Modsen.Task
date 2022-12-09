@@ -1,11 +1,9 @@
 using DataAccessLayer.Data;
 using Entities.Identity;
-using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServerApi.IdentityServerSettings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using IdentityServer4.EntityFramework.Mappers;
-using IdentityServerApi.IdentityServerSettings;
 
 namespace IdentityServerApi;
 public class Program
@@ -13,6 +11,18 @@ public class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("_myAllowSpecificOrigins",
+                              policy =>
+                              {
+                                  policy
+                                  .WithOrigins("https://localhost:7168")
+                                  .AllowAnyHeader()
+                                  .AllowAnyMethod();
+                              });
+        });
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
@@ -51,7 +61,7 @@ public class Program
 
         var app = builder.Build();
 
-        IdentityServerDbInitializer.InitializeDatabase(app);
+        app.InitializeDatabase();
 
         if (app.Environment.IsDevelopment())
         {
@@ -60,6 +70,8 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+
+        app.UseCors("_myAllowSpecificOrigins");
 
         app.UseAuthorization();
 

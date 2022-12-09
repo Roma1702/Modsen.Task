@@ -1,7 +1,5 @@
-﻿using DataAccessLayer.Abstractions.Interfaces;
-using Domain.Abstractions.Interfaces;
+﻿using Domain.Abstractions.Interfaces;
 using Microsoft.AspNetCore.Http;
-using Models.Core;
 
 namespace Domain.Services
 {

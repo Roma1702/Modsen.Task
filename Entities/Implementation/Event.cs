@@ -1,6 +1,4 @@
-﻿using Entities.Identity;
-
-namespace Entities.Implementation;
+﻿namespace Entities.Implementation;
 
 public class Event
 {

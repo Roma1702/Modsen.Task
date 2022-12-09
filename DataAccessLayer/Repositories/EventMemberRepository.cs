@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Abstractions.Interfaces;
 using DataAccessLayer.Data;
-using Entities.Identity;
 using Entities.Implementation;
 using Microsoft.EntityFrameworkCore;
 using Models.Core;

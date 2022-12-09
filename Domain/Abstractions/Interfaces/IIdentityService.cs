@@ -1,6 +1,4 @@
-﻿using Models.Core;
-
-namespace Domain.Abstractions.Interfaces
+﻿namespace Domain.Abstractions.Interfaces
 {
     public interface IIdentityService
     {

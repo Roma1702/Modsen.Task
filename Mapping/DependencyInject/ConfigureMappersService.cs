@@ -4,14 +4,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Mapping.DependencyInject;
 
-public static class ConfigureMappers
+public static class ConfigureMappersService
 {
-    public static void Configure(IServiceCollection services)
+    public static void ConfigureMappers(this IServiceCollection services)
     {
         var mapperConfiguration = new MapperConfiguration(options =>
         {
             options.AddProfile(new EventMapper());
-            options.AddProfile(new UserMapper());
+            options.AddProfile(new EventRoleMapper());
+            options.AddProfile(new EventMemberMapper());
         });
 
         var mapper = mapperConfiguration.CreateMapper();

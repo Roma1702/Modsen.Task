@@ -28,7 +28,24 @@ public static class IdentityServerConfiguration
     public static IEnumerable<ApiScope> GetApiScopes() =>
         new List<ApiScope>
         {
-            new ApiScope("api", "api")
+            new ApiScope
+            {
+                Name = "api",
+                DisplayName = "api",
+                Enabled = true,
+                UserClaims =
+                {
+                    JwtClaimTypes.Name,
+                    JwtClaimTypes.Email,
+                    JwtClaimTypes.Subject,
+                    JwtClaimTypes.Role,
+                    JwtClaimTypes.Address,
+                    JwtClaimTypes.Confirmation,
+                    JwtClaimTypes.EmailVerified,
+                    JwtClaimTypes.Id,
+                    JwtClaimTypes.Profile
+                }
+            }
         };
 
     public static IEnumerable<ApiResource> GetApiResources() =>

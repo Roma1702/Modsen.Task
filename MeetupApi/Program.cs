@@ -6,6 +6,7 @@ using Mapping.DependencyInject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Validation.DependencyInject;
 
 namespace MeetupApi;
 public class Program
@@ -64,6 +65,7 @@ public class Program
         builder.Services.ConfigureMappers();
         builder.Services.ConfigureRepositories();
         builder.Services.ConfigureServices();
+        builder.Services.ConfigureValidators();
 
         builder.Services.AddDbContext<ApplicationContext>(options =>
         {

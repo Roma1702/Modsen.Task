@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.Abstractions.Interfaces;
 using Domain.Abstractions.Interfaces;
 using Entities.Implementation;
+using FluentValidation;
 using Models.Core;
 
 namespace Domain.Services
@@ -10,14 +11,17 @@ namespace Domain.Services
         private readonly IEventMemberRepository _eventMemberRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IEventRoleRepository _eventRoleRepository;
+        private readonly IValidator<EventModel> _validator;
 
         public EventService(IEventMemberRepository eventMemberRepository,
             IEventRepository eventRepository,
-            IEventRoleRepository eventRoleRepository)
+            IEventRoleRepository eventRoleRepository,
+            IValidator<EventModel> validator)
         {
             _eventMemberRepository = eventMemberRepository;
             _eventRepository = eventRepository;
             _eventRoleRepository = eventRoleRepository;
+            _validator = validator;
         }
         public async Task<List<EventModel>?> GetEventsAsync(int number, int size)
         {
@@ -31,13 +35,18 @@ namespace Domain.Services
 
         public async Task CreateNewEventAsync(EventModel @event, Guid creatorId)
         {
-            @event.Id = Guid.NewGuid();
+            var validationResult = await _validator.ValidateAsync(@event);
 
-            var eventRole = await _eventRoleRepository.GetEventRoleAsync(RoleType.Creator);
+            if (validationResult.IsValid)
+            {
+                @event.Id = Guid.NewGuid();
 
-            await _eventRepository.AddEventAsync(@event);
+                var eventRole = await _eventRoleRepository.GetEventRoleAsync(RoleType.Creator);
 
-            await _eventMemberRepository.AddEventMemberAsync(creatorId, @event.Id, eventRole?.Id ?? Guid.Empty);
+                await _eventRepository.AddEventAsync(@event);
+
+                await _eventMemberRepository.AddEventMemberAsync(creatorId, @event.Id, eventRole?.Id ?? Guid.Empty);
+            }
         }
         public async Task DeleteEventAsync(Guid eventId, Guid creatorId)
         {
@@ -53,11 +62,16 @@ namespace Domain.Services
 
         public async Task EditEventAsync(EventModel @event, Guid creatorId)
         {
-            var role = await GetRoleTypeOfInitiatorAsync(@event.Id, creatorId);
+            var validationResult = await _validator.ValidateAsync(@event);
 
-            if (role == RoleType.Creator)
+            if (validationResult.IsValid)
             {
-                await _eventRepository.UpdateEventAsync(@event);
+                var role = await GetRoleTypeOfInitiatorAsync(@event.Id, creatorId);
+
+                if (role == RoleType.Creator)
+                {
+                    await _eventRepository.UpdateEventAsync(@event);
+                }
             }
         }
 

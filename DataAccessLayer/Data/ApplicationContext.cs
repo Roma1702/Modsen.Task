@@ -4,6 +4,7 @@ using Entities.Implementation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace DataAccessLayer.Data;
 
@@ -26,7 +27,6 @@ public class ApplicationContext : IdentityDbContext<User,
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.ApplyConfiguration(new EventConfiguration());
-        builder.ApplyConfiguration(new EventMemberConfiguration());
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
